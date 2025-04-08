@@ -238,44 +238,38 @@ void SaveImagePgm(char* bruit,char* name,float** mat,int lgth,int wdth)
 //---- Fonction Pour TP ---//
 //-------------------------//
 
-double next_value(float mu, float x) {
+float fl_next_series_value(float mu, float x) {
   return mu * x * (1 - x);
 }
 
-int translate_x(float x, int width) {
-    // Calculate rounded value
-    int result = (int)roundf(width - x * width);
-    // Ensure it's within bounds
-    if (result < 0) return 0;
-    if (result >= width) return width - 1;
-    return result;
+double db_next_series_value(double mu, double x) {
+    return mu * x * (1 - x);
 }
 
-int translate_y(float y, int height) {
-    // Calculate rounded value
-    int result = (int)roundf((y - 2.5f) * height / 1.5f);
-    // Ensure it's within bounds
-    if (result < 0) return 0;
-    if (result >= height) return height - 1;
-    return result;
+float fl_pi_approx(float mu, float x, int N) {
+  float denominator = 0.0;
+
+  for (int i = 1; i <= N; i++) {
+    denominator += sqrt(x);
+    x = fl_next_series_value(mu, x);
+  }
+
+  denominator /= N;
+
+  return (float)(2.0 / denominator);
 }
-void apply_series(float mu, float x, float** Graph2D) {
-  int i;
-  int x_pos, y_pos;
-  float next_x = x;
 
-  // First 10000 iterations
-  for (i = 0; i < 10000; i++) {
-    next_x = next_value(mu, next_x);
+double db_pi_approx(double mu, double x, int N) {
+  double denominator = 0.0;
+
+  for (int i = 1; i <= N; i++) {
+    denominator += sqrt(x);
+    x = db_next_series_value(mu, x);
   }
 
-  // Next 10000 iterations
-  for (i = 0; i < 10000; i++) {
-    next_x = next_value(mu, next_x);
-    x_pos = translate_x(next_x, 4096);
-    y_pos = translate_y(mu, 4096);
-    Graph2D[x_pos][y_pos] = 0.0;
-  }
+  denominator /= N;
+
+  return 2.0 / denominator;
 }
 
 //----------------------------------------------------------
@@ -323,11 +317,13 @@ int main(int argc,char** argv)
 
  //Programmer ici
 
- for (float mu = 2.5; mu < 4.0; mu += 0.0001) {
-    float x = 0.5;
-    apply_series(mu, x, Graph2D);
-  }
+ printf("Float approximation of pi with x_0 = 0.2: %f\n", fl_pi_approx(4.0, 0.2, 10000000));
+ printf("Float approximation of pi with x_0 = 0.4: %f\n", fl_pi_approx(4.0, 0.4, 10000000));
+ printf("Float approximation of pi with x_0 = 0.6: %f\n", fl_pi_approx(4.0, 0.6, 10000000));
 
+ printf("Double approximation of pi with x_0 = 0.2: %f\n", db_pi_approx(4.0, 0.2, 10000000));
+ printf("Double approximation of pi with x_0 = 0.4: %f\n", db_pi_approx(4.0, 0.4, 10000000));
+ printf("Double approximation of pi with x_0 = 0.6: %f\n", db_pi_approx(4.0, 0.6, 10000000));
  //End
 
 
@@ -343,7 +339,7 @@ int main(int argc,char** argv)
  x_ppicture=cree_Ximage(Graph2D,zoom,length,width);
 
  //Sauvegarde
- SaveImagePgm((char*)"",(char*)"Graphe",Graph2D,length,width); //Pour sauvegarder l'image
+ // SaveImagePgm((char*)"",(char*)"Graphe",Graph2D,length,width); //Pour sauvegarder l'image
  printf("\n\n Pour quitter,appuyer sur la barre d'espace");
  fflush(stdout);
 

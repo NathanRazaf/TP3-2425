@@ -238,7 +238,7 @@ void SaveImagePgm(char* bruit,char* name,float** mat,int lgth,int wdth)
 //---- Fonction Pour TP ---//
 //-------------------------//
 
-double next_value(float mu, float x) {
+float next_value(float mu, float x) {
   return mu * x * (1 - x);
 }
 
@@ -343,7 +343,7 @@ int main(int argc,char** argv)
  x_ppicture=cree_Ximage(Graph2D,zoom,length,width);
 
  //Sauvegarde
- SaveImagePgm((char*)"",(char*)"Graphe",Graph2D,length,width); //Pour sauvegarder l'image
+ // SaveImagePgm((char*)"",(char*)"Graphe",Graph2D,length,width); //Pour sauvegarder l'image
  printf("\n\n Pour quitter,appuyer sur la barre d'espace");
  fflush(stdout);
 
