@@ -317,13 +317,16 @@ int main(int argc,char** argv)
 
  //Programmer ici
 
- printf("Float approximation of pi with x_0 = 0.2: %f\n", fl_pi_approx(4.0, 0.2, 10000000));
- printf("Float approximation of pi with x_0 = 0.4: %f\n", fl_pi_approx(4.0, 0.4, 10000000));
- printf("Float approximation of pi with x_0 = 0.6: %f\n", fl_pi_approx(4.0, 0.6, 10000000));
+ printf("Float approximation:\n");
+ printf("[0.2:>%.10f]\n", fl_pi_approx(4.0, 0.2, 10000000));
+ printf("[0.4:>%.10f]\n", fl_pi_approx(4.0, 0.4, 10000000));
+ printf("[0.6:>%.10f]\n\n", fl_pi_approx(4.0, 0.6, 10000000));
 
- printf("Double approximation of pi with x_0 = 0.2: %f\n", db_pi_approx(4.0, 0.2, 10000000));
- printf("Double approximation of pi with x_0 = 0.4: %f\n", db_pi_approx(4.0, 0.4, 10000000));
- printf("Double approximation of pi with x_0 = 0.6: %f\n", db_pi_approx(4.0, 0.6, 10000000));
+ printf("Double approximation:\n");
+ printf("[0.2:>%.10f]\n", db_pi_approx(4.0, 0.2, 10000000));
+ printf("[0.4:>%.10f]\n", db_pi_approx(4.0, 0.4, 10000000));
+ printf("[0.6:>%.10f]\n\n", db_pi_approx(4.0, 0.6, 10000000));
+
  //End
 
 
